@@ -1,0 +1,19 @@
+{
+  "name": "anime-builder",
+  "version": "0.0.1",
+  "description": "Builder tool for the Anime.js library",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/parcel index.html",
+    "test": "test"
+  },
+  "author": "Dominic Cicilio",
+  "license": "MIT",
+  "dependencies": {
+    "animejs": "^3.0.1",
+    "parcel": "^1.11.0"
+  },
+  "devDependencies": {
+    "sass": "^1.16.1"
+  }
+}
