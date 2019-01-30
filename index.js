@@ -209,11 +209,12 @@ import Guide from './src/js/Guide';
   });
   
   let animation = builder
-    .add(Guide.animeMoveX(100, {duration: 3000, trailLength: 12}))
-    .add(Guide.animeMoveX(0, {duration: 3000, trailLength: 12}))
-  //   .onUpdate(() => {
-  // guideLeft.getCurrentPos()
-  //    })
+    .add(Guide.animeMoveX(0, {duration: 0, trailLength: 0}))
+    .add(Guide.animeMoveX(100, {duration: 500, trailLength: 12}))
+    .add(Guide.animeMoveX(0, {duration: 500, trailLength: 12}))
+    .add(Guide.animeMoveY(100, {duration: 500, trailLength: 6}))
+    .add(Guide.animeMoveY(0, {duration: 500, trailLength: 6}))
+
     .generateAnime();
   
   console.log(guideLeft.getCurrentPos());

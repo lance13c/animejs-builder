@@ -2056,6 +2056,11 @@ function () {
           duration: duration,
           easing: "easeInOutQuad"
         }],
+        translateY: [{
+          value: 0,
+          duration: duration,
+          easing: "easeInOutQuad"
+        }],
         scaleX: [{
           value: 1,
           duration: duration / 8,
@@ -2094,6 +2099,11 @@ function () {
       return {
         translateY: [{
           value: distance,
+          duration: duration,
+          easing: "easeInOutQuad"
+        }],
+        translateX: [{
+          value: 0,
           duration: duration,
           easing: "easeInOutQuad"
         }],
@@ -2505,16 +2515,22 @@ var builder = new _AnimeBuilder.default({
   autoplay: true //true
 
 });
-var animation = builder.add(_Guide.default.animeMoveX(100, {
-  duration: 3000,
+var animation = builder.add(_Guide.default.animeMoveX(0, {
+  duration: 0,
+  trailLength: 0
+})).add(_Guide.default.animeMoveX(100, {
+  duration: 500,
   trailLength: 12
 })).add(_Guide.default.animeMoveX(0, {
-  duration: 3000,
+  duration: 500,
   trailLength: 12
-})) //   .onUpdate(() => {
-// guideLeft.getCurrentPos()
-//    })
-.generateAnime();
+})).add(_Guide.default.animeMoveY(100, {
+  duration: 500,
+  trailLength: 6
+})).add(_Guide.default.animeMoveY(0, {
+  duration: 500,
+  trailLength: 6
+})).generateAnime();
 console.log(guideLeft.getCurrentPos());
 setTimeout(function () {
   console.log(guideLeft.getCurrentPos());

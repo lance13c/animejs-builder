@@ -56,6 +56,13 @@ export default class Guide {
           easing: "easeInOutQuad"
         }
       ],
+      translateY: [
+        {
+          value: 0,
+          duration: duration,
+          easing: "easeInOutQuad"
+        }
+      ],
       scaleX: [
         {value: 1, duration: (duration / 8), easing: "easeInOutQuad"},
         {value: trailLength, duration: (duration * 3/8), easing: "easeOutQuad"},
@@ -77,6 +84,13 @@ export default class Guide {
       translateY: [
         {
           value: distance,
+          duration: duration,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateX: [
+        {
+          value: 0,
           duration: duration,
           easing: "easeInOutQuad"
         }
