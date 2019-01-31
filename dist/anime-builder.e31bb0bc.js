@@ -1870,6 +1870,14 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1889,35 +1897,179 @@ function () {
 
     };
     this.animeConfig = animeConfig;
+    this.totalDuration = 0;
+    this.propDurationMap = new Map();
+    this.DEFAULT_VALUES = {
+      scaleX: 1,
+      scaleY: 1
+    };
   }
 
   _createClass(AnimeBuilder, [{
     key: "add",
-    value: function add(rule) {
+    value: function add(propertySet) {
       var _this = this;
 
-      // TODO get this to work with extracted rulesets, animeBuilders and animeObjects
-      var _arr = Object.entries(rule);
+      // TODO get this to work with extracted properties, animeBuilders and animeObjects
+      var _arr = Object.entries(propertySet);
 
       var _loop = function _loop() {
         var _arr$_i = _slicedToArray(_arr[_i], 2),
-            stepKey = _arr$_i[0],
-            stepVal = _arr$_i[1];
+            propKey = _arr$_i[0],
+            propVal = _arr$_i[1];
 
-        if (!_this.animeRules.hasOwnProperty(stepKey)) {
-          _this.animeRules[stepKey] = stepVal;
+        if (!_this.animeRules.hasOwnProperty(propKey)) {
+          var diffDur = _this._getDurationDiff(propKey); // Add placeholder if there is a duration difference
+
+
+          if (diffDur > 0) {
+            _this._addPlaceholderProp(propKey, diffDur);
+          }
+
+          ;
+          _this.animeRules[propKey] = propVal;
         } else {
-          stepVal.forEach(function (val) {
-            _this.animeRules[stepKey].push(val);
+          propVal.forEach(function (val) {
+            _this.animeRules[propKey].push(val);
           });
         }
+
+        _this._updatePropDurMap(propKey);
       };
 
       for (var _i = 0; _i < _arr.length; _i++) {
         _loop();
       }
 
+      if (!this._checkSumEquality(this.propDurationMap)) {
+        throw new Error("Each property in the added property-set needs to have equal total durations: ".concat(JSON.stringify(_toConsumableArray(this.propDurationMap)), " "));
+      }
+
+      ;
       return this;
+    }
+    /**
+     * Calculates the duration sum of a property (translateX, translateY, scaleX, etc...)
+     * @param {*} property - animation css property such as (translateX, translateY, scaleX, etc...)
+     */
+
+  }, {
+    key: "_calcDurSum",
+    value: function _calcDurSum(property) {
+      var propValArr = this.animeRules[property];
+      return propValArr.reduce(function (p1, p2) {
+        var dur1 = p1.duration ? p1.duration : 0;
+        var dur2 = p2.duration ? p2.duration : 0;
+        return dur1 + dur2;
+      }, 0);
+    }
+  }, {
+    key: "_getCurrentDuration",
+    value: function _getCurrentDuration(property) {
+      if (!this.propDurationMap.has(property)) {
+        return 0;
+      }
+
+      ;
+      return this.propDurationMap.get(property);
+    }
+  }, {
+    key: "_getDurationDiff",
+    value: function _getDurationDiff(property) {
+      var diffDur = this.totalDuration - this._getCurrentDuration(property);
+
+      if (diffDur < 0) {
+        throw new Error("Property ".concat(property, " has a negitive duration difference, which is not allowed. Please check all added property durations"));
+      }
+
+      return diffDur;
+    }
+    /**
+     * Adds a new propertyValue with the inputed duration.
+     * The placeholder properties value will either be the current
+     * value, or if no current value exists, the default value.
+     * @param {*} property - The property to add the new placeholder to
+     * @param {Number} duration - The duration of that placeholder property
+     */
+
+  }, {
+    key: "_addPlaceholderProp",
+    value: function _addPlaceholderProp(property, duration) {
+      this.animeRules[property].push({
+        value: '*=1',
+        duration: duration
+      });
+    }
+    /**
+     * Gets the previous property value
+     * @param {} property 
+     */
+
+  }, {
+    key: "_getPreviousPropVal",
+    value: function _getPreviousPropVal(property) {}
+    /**
+     * Checks if all of the values in the map are equivalent
+     * returns true if all are equal
+     * @param {Map} numberMap - Map of numbers
+     * @return {boolean}
+     */
+
+  }, {
+    key: "_checkSumEquality",
+    value: function _checkSumEquality(numberMap) {
+      if (numberMap.size === 0) {
+        return true;
+      }
+
+      ;
+      var initVal = numberMap.values().next().value;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = numberMap.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var val = _step.value;
+
+          if (initVal !== val) {
+            return false;
+          }
+
+          ;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return true;
+    }
+  }, {
+    key: "_updatePropDurMap",
+    value: function _updatePropDurMap(property) {
+      if (!property) {
+        throw new Error("Property ".concat(property, " is undefined"));
+      }
+
+      var totalDuration = this._calcDurSum(property);
+
+      if (this.propDurationMap.has(property)) {
+        this.propDurationMap.set(property, this.propDurationMap.get(property) + totalDuration);
+        return;
+      }
+
+      this.propDurationMap.set(property, totalDuration);
     } // adds functions that happens on every animation update
 
   }, {
@@ -1931,6 +2083,20 @@ function () {
     key: "extractAnimeRules",
     value: function extractAnimeRules() {
       return this.animeRules;
+    }
+  }, {
+    key: "getDefaultValues",
+    value: function getDefaultValues() {
+      return this.DEFAULT_VALUES;
+    }
+  }, {
+    key: "getDefaultValue",
+    value: function getDefaultValue(property) {
+      if (this.DEFAULT_VALUES[property]) {
+        return this.DEFAULT_VALUES[property];
+      }
+
+      return 0;
     }
   }, {
     key: "generateAnime",
@@ -2515,10 +2681,8 @@ var builder = new _AnimeBuilder.default({
   autoplay: true //true
 
 });
-var animation = builder.add(_Guide.default.animeMoveX(0, {
-  duration: 0,
-  trailLength: 0
-})).add(_Guide.default.animeMoveX(100, {
+var animation = builder //.add(Guide.animeMoveX(0, {duration: 0, trailLength: 0}))
+.add(_Guide.default.animeMoveX(100, {
   duration: 500,
   trailLength: 12
 })).add(_Guide.default.animeMoveX(0, {
@@ -2562,7 +2726,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51220" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54152" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
