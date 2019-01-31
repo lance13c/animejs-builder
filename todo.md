@@ -29,3 +29,5 @@ animation-property-duration
 if (current-build-duration > animation-property-duration)
   add the animation property (previousValue or defaultVal, difference in duration)
 
+
+
