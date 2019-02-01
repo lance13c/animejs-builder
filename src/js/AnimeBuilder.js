@@ -21,11 +21,14 @@ export default class AnimeBuilder {
     if (!this._checkSumEquality(propertySet)) { throw new Error(`Each property in the added property-set needs to have equal total durations: ${JSON.stringify([...this.propDurationMap])} `)};
 
     for (let [propKey, propVal] of Object.entries(propertySet)) {
+      
+      let diffDur = this._getDurationDiff(propKey); 
+      // Add placeholder if there is a duration difference
+      if (diffDur > 0) { 
+        this._addPlaceholderProp(propKey, diffDur);
+      };
+
       if (!this.animeRules.hasOwnProperty(propKey)) {
-        let diffDur = this._getDurationDiff(propKey);
-        
-        // Add placeholder if there is a duration difference
-        if (diffDur > 0) { this._addPlaceholderProp(propKey, diffDur) };
         this.animeRules[propKey] = propVal;
       } else {
         propVal.forEach((val) => {
@@ -84,6 +87,10 @@ export default class AnimeBuilder {
    * @param {Number} duration - The duration of that placeholder property
    */
   _addPlaceholderProp(property, duration) {
+    if (this.animeRules[property] == undefined) {
+      this.animeRules[property] = [];
+    }
+
     this.animeRules[property].push({
       value: '*=1',
       duration: duration
@@ -128,13 +135,14 @@ export default class AnimeBuilder {
   _updatePropDurMap(property) {
     if (!property) { throw new Error(`Property ${property} is undefined`)}
 
-    let totalDuration = this._calcDurSum(property);
+    let propDurationSum = this._calcDurSum(property);
     if (this.propDurationMap.has(property)) {
        this.propDurationMap.set(property, this.propDurationMap.get(property) + totalDuration);
        return;
     }
 
-    this.propDurationMap.set(property, totalDuration);
+    this.propDurationMap.set(property, propDurationSum);
+    if (propDurationSum > this.totalDuration) { this.totalDuration = propDurationSum };
   }
 
   
