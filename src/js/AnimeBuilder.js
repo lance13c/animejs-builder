@@ -7,6 +7,9 @@ export default class AnimeBuilder {
     };
     this.animeConfig = animeConfig;
     this.totalDuration = 0;
+    // This will be updated more often than totalDuration.
+    // totalduration is read too often so it needs a temp storage
+    this.tempDur = 0;
     this.propDurationMap = new Map();
     this.DEFAULT_VALUES = {
       scaleX: 1,
@@ -18,7 +21,7 @@ export default class AnimeBuilder {
     
     // TODO get this to work with extracted properties, animeBuilders and animeObjects
     
-    if (!this._checkSumEquality(propertySet)) { throw new Error(`Each property in the added property-set needs to have equal total durations: ${JSON.stringify([...this.propDurationMap])} `)};
+    //if (!this._checkSumEquality(propertySet)) { throw new Error(`Each property in the added property-set needs to have equal total durations: ${JSON.stringify([...this.propDurationMap])} `)};
 
     for (let [propKey, propVal] of Object.entries(propertySet)) {
       
@@ -38,6 +41,8 @@ export default class AnimeBuilder {
 
       this._updatePropDurMap(propKey);
     }
+
+    this.totalDuration = this.tempDur;
     
     return this;
   }
@@ -142,8 +147,26 @@ export default class AnimeBuilder {
     }
 
     this.propDurationMap.set(property, propDurationSum);
-    if (propDurationSum > this.totalDuration) { this.totalDuration = propDurationSum };
+    if (propDurationSum > this.tempDur) { this.tempDur = propDurationSum };
   }
+
+
+  /**
+   * Finds the highest duration within a propertySet
+   * 
+   * This method exists because this class needs to update
+   * the this.totalDuration for every PropertySet and not per
+   * property. Otherwise placeholders will be added whenever
+   * a property has a different duration than the other.
+   * The goal is to keep each propertyset the same duration,
+   * allowing for different properties to appear syncronous.
+   * @param {*} propertySet - Object of properties Arrays
+   */
+  // _findMaxDuration(propertySet) {
+  //   for (let [propKey, propVal] of Object.entries(propertySet)) {
+
+  //   }
+  // }
 
   
   // adds functions that happens on every animation update

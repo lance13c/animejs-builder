@@ -26,6 +26,47 @@ describe("add", () => {
       ]
   }
 
+  const TWO_PROPERTY_RULE = {
+      scaleY: [
+        {
+          value: 1,
+          duration: 700,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateX: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        }
+      ]
+    }
+
+    const THREE_PROPERTY_RULE = {
+      scaleY: [
+        {
+          value: 1,
+          duration: 700,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateX: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateY: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        }
+      ]
+    }
+
   beforeEach( () => {
     animeBuilder = new AnimeBuilder({
       target: '.test',
@@ -72,8 +113,42 @@ describe("add", () => {
     });
   });
 
-  it("should throw an error when each property's duration sum does not equal one another", () => {
-    const DIFFERENT_DURATION_RULE = {
+  it("should be able to accept an array of 2 animation properties", () => {
+    
+    animeBuilder.add(TWO_PROPERTY_RULE);
+
+    expect(animeBuilder.extractAnimeRules()).to.eql({
+       animeBuilderId: true,
+       scaleY: [
+          {
+            value: 1,
+            duration: 700,
+            easing: "easeInOutQuad"
+          }
+        ],
+        translateX: [
+          {
+            value: 1,
+            duration: 100,
+            easing: "easeInOutQuad"
+          }
+        ]
+    });
+  });
+
+  it("should be able to accept an array of 3 animation properties", () => {
+    
+    animeBuilder.add(THREE_PROPERTY_RULE);
+
+    expect(animeBuilder.extractAnimeRules()).to.eql({
+       animeBuilderId: true,
+       scaleY: [
+        {
+          value: 1,
+          duration: 700,
+          easing: "easeInOutQuad"
+        }
+      ],
       translateX: [
         {
           value: 1,
@@ -84,14 +159,32 @@ describe("add", () => {
       translateY: [
         {
           value: 1,
-          duration: 200,
+          duration: 100,
           easing: "easeInOutQuad"
         }
       ]
-    }
-
-      expect(animeBuilder.add.bind(animeBuilder, DIFFERENT_DURATION_RULE)).to.throw(Error);
+    });
   });
+
+  // it("should throw an error when each property's duration sum does not equal one another", () => {
+  //   const DIFFERENT_DURATION_RULE = {
+  //     translateX: [
+  //       {
+  //         value: 1,
+  //         duration: 100,
+  //         easing: "easeInOutQuad"
+  //       }
+  //     ],
+  //     translateY: [
+  //       {
+  //         value: 1,
+  //         duration: 200,
+  //         easing: "easeInOutQuad"
+  //       }
+  //     ]
+  //   }
+  //     expect(animeBuilder.add.bind(animeBuilder, DIFFERENT_DURATION_RULE)).to.throw(Error);
+  // });
 
   // placeholder-property-value is an object within the property array. An array is (translateX, translateY, scaleX, etc..)
   it("should add a placeholder-property-value to a non-existing property that's duration does not equal the totalDuration", () => {
@@ -124,7 +217,65 @@ describe("add", () => {
     });
   });
 
-//   it("should add a placeholder-property-value to an existing property that's duration does not equal the totalDuration", () => {
-//     expect(true).to.equal(true);
-//   });
+  it("should add a placeholder-property-value to an existing property that's duration does not equal the totalDuration", () => {
+
+      // Rule with different prop
+    const OFFSET_RULE = {
+      scaleY: [
+        {
+          value: 1,
+          duration: 700,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateX: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        }
+      ]
+    }
+
+    const TRANSLATE_X_100_RULE = {
+      translateX: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        }
+      ]
+    }
+    
+    animeBuilder.add(OFFSET_RULE);
+    animeBuilder.add(TRANSLATE_X_100_RULE);
+    
+    expect(animeBuilder.extractAnimeRules()).
+      to.eql({
+      animeBuilderId: true,
+      scaleY: [
+        {
+          value: 1,
+          duration: 700,
+          easing: "easeInOutQuad"
+        }
+      ],
+      translateX: [
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        },
+        {
+          value: '*=1',
+          duration: 600,
+        },
+        {
+          value: 1,
+          duration: 100,
+          easing: "easeInOutQuad"
+        },
+      ]
+    });
+  });
 });
