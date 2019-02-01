@@ -29,7 +29,7 @@ export default class AnimeBuilder {
       };
 
       if (!this.animeRules.hasOwnProperty(propKey)) {
-        this.animeRules[propKey] = propVal;
+        this.animeRules[propKey] = propVal.slice(0);
       } else {
         propVal.forEach((val) => {
           this.animeRules[propKey].push(val);
@@ -137,7 +137,7 @@ export default class AnimeBuilder {
 
     let propDurationSum = this._calcDurSum(property);
     if (this.propDurationMap.has(property)) {
-       this.propDurationMap.set(property, this.propDurationMap.get(property) + totalDuration);
+       this.propDurationMap.set(property, this.propDurationMap.get(property) + propDurationSum);
        return;
     }
 
