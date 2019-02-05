@@ -24,25 +24,32 @@ export default class AnimeBuilder {
     //if (!this._checkSumEquality(propertySet)) { throw new Error(`Each property in the added property-set needs to have equal total durations: ${JSON.stringify([...this.propDurationMap])} `)};
 
     for (let [propKey, propVal] of Object.entries(propertySet)) {
-      
-      let diffDur = this._getDurationDiff(propKey); 
+
+      // After all props have been added
+
+      let diffDur = this._getDurationDiff(propKey);
+
       // Add placeholder if there is a duration difference
-      if (diffDur > 0) { 
+      if (diffDur > 0) {
         this._addPlaceholderProp(propKey, diffDur);
+        this._addToPropDurMap(propKey, diffDur);
       };
 
       if (!this.animeRules.hasOwnProperty(propKey)) {
         this.animeRules[propKey] = propVal.slice(0);
+        let durSum = this._getDurationPropValSum(propVal.slice(0));
+        this._addToPropDurMap(propKey, durSum);
       } else {
         propVal.forEach((val) => {
           this.animeRules[propKey].push(val);
+          this._addToPropDurMap(propKey, val.duration);
         });
       }
 
-      this._updatePropDurMap(propKey);
+      //this._updatePropDurMap(propKey);
     }
 
-    this.totalDuration = this.tempDur;
+    this.totalDuration = this._getHighestDurFromMap(this.propDurationMap);
     
     return this;
   }
@@ -54,11 +61,13 @@ export default class AnimeBuilder {
   _calcDurSum(property) {
     let propValArr = this.animeRules[property];
 
-    return propValArr.reduce((p1, p2) => {
+    let sumDurObj = propValArr.reduce((p1, p2) => {
       let dur1 = (p1.duration) ? p1.duration : 0;
       let dur2 = (p2.duration) ? p2.duration : 0;
-      return dur1 + dur2;
+      return {duration: dur1 + dur2};
     }, 0);
+
+    return sumDurObj.duration;
   }
 
   _getCurrentDuration(property) {
@@ -71,10 +80,12 @@ export default class AnimeBuilder {
    * @param {Array} propVals - An array of property values
    */
   _getDurationPropValSum(propVals) {
-    return propVals.reduce((v1, v2) => {
+    let durObj = propVals.reduce((v1, v2) => {
       if (!v1.duration == undefined || !v2.duration == undefined) { throw new Error(`All propvals must have a duration. Propvals: ${propVals}`)}
-      return v1.duration + v2.duration;
+      return {duration: v1.duration + v2.duration};
     }, {duration: 0});
+
+    return durObj.duration
   }
 
   _getDurationDiff(property) {
@@ -101,15 +112,6 @@ export default class AnimeBuilder {
       duration: duration
     });
   }
-
-  /**
-   * Gets the previous property value
-   * @param {} property 
-   */
-  _getPreviousPropVal(property) {
-
-  }
-
  
   /**
    * Checks if the sum of each property's duration values
@@ -135,40 +137,38 @@ export default class AnimeBuilder {
     return true;
   }
 
+  /**
+   * 
+   * @param {*} durationMap - a propDurationMap, map linking props to their total durations
+   */
+  _getHighestDurFromMap(durationMap) {
+    let highestDur = 0;
 
+    for (let duration of durationMap.values()) {   
+      if (duration > highestDur) { highestDur = duration }
+    }
+
+    return highestDur;
+  }
 
   _updatePropDurMap(property) {
     if (!property) { throw new Error(`Property ${property} is undefined`)}
 
     let propDurationSum = this._calcDurSum(property);
+    if (propDurationSum > this.tempDur) { this.tempDur = propDurationSum };
+
+    this._addToPropDurMap(property, propDurationSum);
+  }
+
+  _addToPropDurMap(property, duration) {
     if (this.propDurationMap.has(property)) {
-       this.propDurationMap.set(property, this.propDurationMap.get(property) + propDurationSum);
+       this.propDurationMap.set(property, this.propDurationMap.get(property) + duration);
        return;
     }
 
-    this.propDurationMap.set(property, propDurationSum);
-    if (propDurationSum > this.tempDur) { this.tempDur = propDurationSum };
+    this.propDurationMap.set(property, duration);
   }
 
-
-  /**
-   * Finds the highest duration within a propertySet
-   * 
-   * This method exists because this class needs to update
-   * the this.totalDuration for every PropertySet and not per
-   * property. Otherwise placeholders will be added whenever
-   * a property has a different duration than the other.
-   * The goal is to keep each propertyset the same duration,
-   * allowing for different properties to appear syncronous.
-   * @param {*} propertySet - Object of properties Arrays
-   */
-  // _findMaxDuration(propertySet) {
-  //   for (let [propKey, propVal] of Object.entries(propertySet)) {
-
-  //   }
-  // }
-
-  
   // adds functions that happens on every animation update
   onUpdate(callback) {
     this.animeConfig.update = callback;

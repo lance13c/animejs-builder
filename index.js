@@ -1,4 +1,4 @@
-import AnimeBuilder from './src/js/AnimeBuilder';
+import AnimeBuilder from './dist/AnimeBuilder';
 import anime from "animejs";
 import Guide from './src/js/Guide';
   
@@ -180,10 +180,10 @@ import Guide from './src/js/Guide';
       case "secondpage": {
         
         guideleft.style.left = `${secondpageStartCord.x}px`;
-          guideleft.style.top = `${secondpageStartCord.y}px`;
-        
-          guideright.style.left = `${secondpageStartCord.x}px`;
-          guideright.style.top = `${secondpageStartCord.y}px`;
+        guideleft.style.top = `${secondpageStartCord.y}px`;
+      
+        guideright.style.left = `${secondpageStartCord.x}px`;
+        guideright.style.top = `${secondpageStartCord.y}px`;
         
         leftGuideA.reset();
         leftGuideA.play();
@@ -205,20 +205,25 @@ import Guide from './src/js/Guide';
   let builder = new AnimeBuilder({
     targets: '.guideleft',
     loop: true,
-    autoplay: true //true
+    autoplay: true, //true
   });
   
   let animation = builder
     //.add(Guide.animeMoveX(0, {duration: 0, trailLength: 0}))
-    .add(Guide.animeMoveX(100, {duration: 500, trailLength: 12}))
-    .add(Guide.animeMoveX(0, {duration: 500, trailLength: 12}))
-    .add(Guide.animeMoveY(100, {duration: 500, trailLength: 6}))
-    .add(Guide.animeMoveY(0, {duration: 500, trailLength: 6}))
+    .add(Guide.animeMoveX(100, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveX(200, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
+    .add(Guide.animeMoveY(300, {duration: 200, trailLength: 12}))
+
+    //.add(Guide.animeMoveX(0, {duration: 800, trailLength: 12}))
 
     .generateAnime();
-  
-  console.log(guideLeft.getCurrentPos());
-  
+
+  console.log(builder.extractAnimeRules());
+    
   setTimeout(() => {
     console.log(guideLeft.getCurrentPos())
   }, 200);

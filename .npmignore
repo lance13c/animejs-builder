@@ -1,0 +1,13 @@
+
+
+src/
+test/
+node_modules/
+.vscode/
+.cache/**/**
+.babelrc
+.gitignore
+backup.js
+index.html
+index.js
+todo.md

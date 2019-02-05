@@ -1,17 +1,22 @@
 {
   "name": "anime-builder",
   "version": "0.0.1",
-  "description": "Builder tool for the Anime.js library",
-  "main": "index.js",
+  "description": "A sequential animation building tool for the Anime.js library",
+  "umd:main": "dist/AnimeBuilder.min.js",
+  "main": "dist/AnimeBuilder.js",
+  "umd:name": "AnimeBuilder",
   "scripts": {
     "start": "./node_modules/.bin/parcel index.html",
+    "build-node-min": "./node_modules/.bin/parcel build ./src/js/AnimeBuilder.js --target node --out-file AnimeBuilder.min.js --global AnimeBuilder",
+    "build-node": "./node_modules/.bin/parcel build ./src/js/AnimeBuilder.js --target node --no-minify --global AnimeBuilder",
+    "build-browser": "./node_modules/.bin/parcel build ./src/js/AnimeBuilder.js --target browser --out-file AnimeBuilder.browser.js --global AnimeBuilder",
+    "build": "npm run build-node-min && npm run build-node && npm run build-browser",
     "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
   },
   "author": "Dominic Cicilio",
   "license": "MIT",
   "dependencies": {
-    "animejs": "^3.0.1",
-    "parcel": "^1.11.0"
+    "animejs": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -20,6 +25,18 @@
     "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "sass": "^1.16.1"
-  }
+    "sass": "^1.16.1",
+    "parcel": "^1.11.0"
+  },
+  "keywords": [
+    "anime",
+    "builder",
+    "anime-builder",
+    "animation",
+    "animation builder",
+    "animejs",
+    "animationjs",
+    "sequence",
+    "sequencer"
+  ]
 }
