@@ -1,6 +1,6 @@
 {
   "name": "animejs-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A sequential animation building tool for the Anime.js library",
   "umd:main": "lib/AnimeBuilder.min.js",
   "main": "lib/AnimeBuilder.js",
@@ -37,9 +37,11 @@
     "animejs-build",
     "animation",
     "animation-builder",
-    "animejs",
     "animationjs",
     "sequence",
     "sequencer"
+  ],
+  "files": [
+    "lib"
   ]
 }
