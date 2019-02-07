@@ -2,6 +2,7 @@
 
 src/
 test/
+dist/
 node_modules/
 .vscode/
 .cache/**/**
