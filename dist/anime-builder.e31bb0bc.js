@@ -1850,182 +1850,133 @@ anime.random = function (min, max) {
 
 var _default = anime;
 exports.default = _default;
-},{}],"lib/AnimeBuilder.js":[function(require,module,exports) {
+},{}],"lib/AnimeBuilder.min.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
 var _animejs = _interopRequireDefault(require("animejs"));
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    default: obj
+Object.defineProperty(exports, "__esModule", {
+  value: !0
+}), exports.default = void 0;
+
+function _interopRequireDefault(a) {
+  return a && a.__esModule ? a : {
+    default: a
   };
 }
 
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+function _slicedToArray(a, b) {
+  return _arrayWithHoles(a) || _iterableToArrayLimit(a, b) || _nonIterableRest();
 }
 
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
-function _iterableToArrayLimit(arr, i) {
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
+function _iterableToArrayLimit(a, b) {
+  var c = [],
+      d = !0,
+      e = !1,
+      f = void 0;
 
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
+    for (var g, h = a[Symbol.iterator](); !(d = (g = h.next()).done) && (c.push(g.value), !(b && c.length === b)); d = !0) {
+      ;
     }
-  } catch (err) {
-    _d = true;
-    _e = err;
+  } catch (a) {
+    e = !0, f = a;
   } finally {
     try {
-      if (!_n && _i["return"] != null) _i["return"]();
+      d || null == h["return"] || h["return"]();
     } finally {
-      if (_d) throw _e;
+      if (e) throw f;
     }
   }
 
-  return _arr;
+  return c;
 }
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
+function _arrayWithHoles(a) {
+  if (Array.isArray(a)) return a;
 }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
+function _classCallCheck(a, b) {
+  if (!(a instanceof b)) throw new TypeError("Cannot call a class as a function");
+}
+
+function _defineProperties(a, b) {
+  for (var c, d = 0; d < b.length; d++) {
+    c = b[d], c.enumerable = c.enumerable || !1, c.configurable = !0, "value" in c && (c.writable = !0), Object.defineProperty(a, c.key, c);
   }
 }
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
+function _createClass(a, b, c) {
+  return b && _defineProperties(a.prototype, b), c && _defineProperties(a, c), a;
 }
 
 var AnimeBuilder =
 /*#__PURE__*/
 function () {
-  function AnimeBuilder() {
-    var animeConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  function a() {
+    var b = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {};
+    _classCallCheck(this, a), this.animeRules = {
+      animeBuilderId: !0 // Identifies this as a ruleset built by an AnimeBuilder
 
-    _classCallCheck(this, AnimeBuilder);
-
-    this.animeRules = {
-      animeBuilderId: true // Identifies this as a ruleset built by an AnimeBuilder
-
-    };
-    this.animeConfig = animeConfig;
-    this.totalDuration = 0; // This will be updated more often than totalDuration.
-    // totalduration is read too often so it needs a temp storage
-
-    this.tempDur = 0;
-    this.propDurationMap = new Map();
-    this.DEFAULT_VALUES = {
+    }, this.animeConfig = b, this.totalDuration = 0, this.tempDur = 0, this.propDurationMap = new Map(), this.DEFAULT_VALUES = {
       scaleX: 1,
       scaleY: 1
     };
   }
 
-  _createClass(AnimeBuilder, [{
+  return _createClass(a, [{
     key: "add",
-    value: function add(propertySet) {
-      var _this = this; // TODO get this to work with extracted properties, animeBuilders and animeObjects
+    value: function f(a) {
+      // TODO get this to work with extracted properties, animeBuilders and animeObjects
       //if (!this._checkSumEquality(propertySet)) { throw new Error(`Each property in the added property-set needs to have equal total durations: ${JSON.stringify([...this.propDurationMap])} `)};
+      for (var b = this, c = Object.entries(a), d = function d() {
+        var a = _slicedToArray(c[e], 2),
+            d = a[0],
+            f = a[1],
+            g = b._getDurationDiff(d);
 
+        if (0 < g && (b._addPlaceholderProp(d, g), b._addToPropDurMap(d, g)), !b.animeRules.hasOwnProperty(d)) {
+          b.animeRules[d] = f.slice(0);
 
-      var _arr = Object.entries(propertySet);
+          var h = b._getDurationPropValSum(f.slice(0));
 
-      var _loop = function _loop() {
-        var _arr$_i = _slicedToArray(_arr[_i], 2),
-            propKey = _arr$_i[0],
-            propVal = _arr$_i[1]; // After all props have been added
+          b._addToPropDurMap(d, h);
+        } else f.forEach(function (a) {
+          b.animeRules[d].push(a), b._addToPropDurMap(d, a.duration);
+        }); //this._updatePropDurMap(propKey);
 
-
-        var diffDur = _this._getDurationDiff(propKey); // Add placeholder if there is a duration difference
-
-
-        if (diffDur > 0) {
-          _this._addPlaceholderProp(propKey, diffDur);
-
-          _this._addToPropDurMap(propKey, diffDur);
-        }
-
-        ;
-
-        if (!_this.animeRules.hasOwnProperty(propKey)) {
-          _this.animeRules[propKey] = propVal.slice(0);
-
-          var durSum = _this._getDurationPropValSum(propVal.slice(0));
-
-          _this._addToPropDurMap(propKey, durSum);
-        } else {
-          propVal.forEach(function (val) {
-            _this.animeRules[propKey].push(val);
-
-            _this._addToPropDurMap(propKey, val.duration);
-          });
-        } //this._updatePropDurMap(propKey);
-
-      };
-
-      for (var _i = 0; _i < _arr.length; _i++) {
-        _loop();
+      }, e = 0; e < c.length; e++) {
+        d();
       }
 
-      this.totalDuration = this._getHighestDurFromMap(this.propDurationMap);
-      return this;
+      return this.totalDuration = this._getHighestDurFromMap(this.propDurationMap), this;
     }
     /**
-       * Calculates the duration sum of a property (translateX, translateY, scaleX, etc...)
-       * @param {*} property - animation css property such as (translateX, translateY, scaleX, etc...)
-       */
+     * Calculates the duration sum of a property (translateX, translateY, scaleX, etc...)
+     * @param {*} property - animation css property such as (translateX, translateY, scaleX, etc...)
+     */
 
   }, {
     key: "_calcDurSum",
-    value: function _calcDurSum(property) {
-      var propValArr = this.animeRules[property];
-      var sumDurObj = propValArr.reduce(function (p1, p2) {
-        var dur1 = p1.duration ? p1.duration : 0;
-        var dur2 = p2.duration ? p2.duration : 0;
+    value: function d(a) {
+      var b = this.animeRules[a],
+          c = b.reduce(function (a, b) {
+        var c = a.duration ? a.duration : 0,
+            d = b.duration ? b.duration : 0;
         return {
-          duration: dur1 + dur2
+          duration: c + d
         };
       }, 0);
-      return sumDurObj.duration;
+      return c.duration;
     }
   }, {
     key: "_getCurrentDuration",
-    value: function _getCurrentDuration(property) {
-      if (!this.propDurationMap.has(property)) {
-        return 0;
-      }
-
-      ;
-      return this.propDurationMap.get(property);
+    value: function b(a) {
+      return this.propDurationMap.has(a) ? this.propDurationMap.get(a) : 0;
     }
     /**
        * Sums up all of the duration of an array of prop values
@@ -2034,30 +1985,24 @@ function () {
 
   }, {
     key: "_getDurationPropValSum",
-    value: function _getDurationPropValSum(propVals) {
-      var durObj = propVals.reduce(function (v1, v2) {
-        if (!v1.duration == undefined || !v2.duration == undefined) {
-          throw new Error("All propvals must have a duration. Propvals: ".concat(propVals));
-        }
-
+    value: function c(a) {
+      var b = a.reduce(function (b, c) {
+        if (null == !b.duration || null == !c.duration) throw new Error("All propvals must have a duration. Propvals: ".concat(a));
         return {
-          duration: v1.duration + v2.duration
+          duration: b.duration + c.duration
         };
       }, {
         duration: 0
       });
-      return durObj.duration;
+      return b.duration;
     }
   }, {
     key: "_getDurationDiff",
-    value: function _getDurationDiff(property) {
-      var diffDur = this.totalDuration - this._getCurrentDuration(property);
+    value: function c(a) {
+      var b = this.totalDuration - this._getCurrentDuration(a);
 
-      if (diffDur < 0) {
-        throw new Error("Property ".concat(property, " has a negitive duration difference, which is not allowed. Please check all added property durations"));
-      }
-
-      return diffDur;
+      if (0 > b) throw new Error("Property ".concat(a, " has a negitive duration difference, which is not allowed. Please check all added property durations"));
+      return b;
     }
     /**
        * Adds a new propertyValue with the inputed duration.
@@ -2069,14 +2014,10 @@ function () {
 
   }, {
     key: "_addPlaceholderProp",
-    value: function _addPlaceholderProp(property, duration) {
-      if (this.animeRules[property] == undefined) {
-        this.animeRules[property] = [];
-      }
-
-      this.animeRules[property].push({
-        value: '*=1',
-        duration: duration
+    value: function c(a, b) {
+      null == this.animeRules[a] && (this.animeRules[a] = []), this.animeRules[a].push({
+        value: "*=1",
+        duration: b
       });
     }
     /**
@@ -2090,26 +2031,16 @@ function () {
 
   }, {
     key: "_checkSumEquality",
-    value: function _checkSumEquality(propertySet) {
-      var compareDur = -1;
+    value: function h(a) {
+      for (var b = -1, c = Object.entries(a), d = 0; d < c.length; d++) {
+        var e = _slicedToArray(c[d], 2),
+            f = e[0],
+            g = e[1];
 
-      var _arr2 = Object.entries(propertySet);
-
-      for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-        var _arr2$_i = _slicedToArray(_arr2[_i2], 2),
-            propKey = _arr2$_i[0],
-            propVals = _arr2$_i[1];
-
-        if (compareDur < 0) {
-          compareDur = this._getDurationPropValSum(propVals);
-        } else {
-          if (compareDur !== this._getDurationPropValSum(propVals)) {
-            return false;
-          }
-        }
+        if (0 > b) b = this._getDurationPropValSum(g);else if (b !== this._getDurationPropValSum(g)) return !1;
       }
 
-      return true;
+      return !0;
     }
     /**
        * 
@@ -2118,99 +2049,70 @@ function () {
 
   }, {
     key: "_getHighestDurFromMap",
-    value: function _getHighestDurFromMap(durationMap) {
-      var highestDur = 0;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+    value: function i(a) {
+      var b = 0,
+          c = !0,
+          d = !1,
+          e = void 0;
 
       try {
-        for (var _iterator = durationMap.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var duration = _step.value;
-
-          if (duration > highestDur) {
-            highestDur = duration;
-          }
+        for (var f, g, h = a.values()[Symbol.iterator](); !(c = (f = h.next()).done); c = !0) {
+          g = f.value, g > b && (b = g);
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+      } catch (a) {
+        d = !0, e = a;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
+          c || null == h.return || h.return();
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
+          if (d) throw e;
         }
       }
 
-      return highestDur;
+      return b;
     }
   }, {
     key: "_updatePropDurMap",
-    value: function _updatePropDurMap(property) {
-      if (!property) {
-        throw new Error("Property ".concat(property, " is undefined"));
-      }
+    value: function c(a) {
+      if (!a) throw new Error("Property ".concat(a, " is undefined"));
 
-      var propDurationSum = this._calcDurSum(property);
+      var b = this._calcDurSum(a);
 
-      if (propDurationSum > this.tempDur) {
-        this.tempDur = propDurationSum;
-      }
-
-      ;
-
-      this._addToPropDurMap(property, propDurationSum);
+      b > this.tempDur && (this.tempDur = b), this._addToPropDurMap(a, b);
     }
   }, {
     key: "_addToPropDurMap",
-    value: function _addToPropDurMap(property, duration) {
-      if (this.propDurationMap.has(property)) {
-        this.propDurationMap.set(property, this.propDurationMap.get(property) + duration);
-        return;
-      }
-
-      this.propDurationMap.set(property, duration);
+    value: function c(a, b) {
+      return this.propDurationMap.has(a) ? void this.propDurationMap.set(a, this.propDurationMap.get(a) + b) : void this.propDurationMap.set(a, b);
     } // adds functions that happens on every animation update
 
   }, {
     key: "onUpdate",
-    value: function onUpdate(callback) {
-      this.animeConfig.update = callback;
-      return this;
+    value: function b(a) {
+      return this.animeConfig.update = a, this;
     } // Returns the raw pre generated ruleset
 
   }, {
     key: "extractAnimeRules",
-    value: function extractAnimeRules() {
+    value: function a() {
       return this.animeRules;
     }
   }, {
     key: "getDefaultValues",
-    value: function getDefaultValues() {
+    value: function a() {
       return this.DEFAULT_VALUES;
     }
   }, {
     key: "getDefaultValue",
-    value: function getDefaultValue(property) {
-      if (this.DEFAULT_VALUES[property]) {
-        return this.DEFAULT_VALUES[property];
-      }
-
-      return 0;
+    value: function b(a) {
+      return this.DEFAULT_VALUES[a] ? this.DEFAULT_VALUES[a] : 0;
     }
   }, {
     key: "generateAnime",
-    value: function generateAnime() {
+    value: function a() {
       return (0, _animejs.default)(Object.assign(this.animeConfig, this.animeRules));
     }
-  }]);
-
-  return AnimeBuilder;
+  }]), a;
 }();
 
 exports.default = AnimeBuilder;
@@ -2516,7 +2418,7 @@ function getComputedTranslateXY(element) {
 },{"./ElementBox":"src/js/ElementBox.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _AnimeBuilder = _interopRequireDefault(require("./lib/AnimeBuilder"));
+var _AnimeBuilderMin = _interopRequireDefault(require("./lib/AnimeBuilder.min.js"));
 
 var _animejs = _interopRequireDefault(require("animejs"));
 
@@ -2770,7 +2672,7 @@ function changeView(e) {
 
 
 var guideLeft = new _Guide.default(".guideleft");
-var builder = new _AnimeBuilder.default({
+var builder = new _AnimeBuilderMin.default({
   targets: '.guideleft',
   loop: true,
   autoplay: true //true
@@ -2804,7 +2706,7 @@ console.log(builder.extractAnimeRules());
 setTimeout(function () {
   console.log(guideLeft.getCurrentPos());
 }, 200);
-},{"./lib/AnimeBuilder":"lib/AnimeBuilder.js","animejs":"node_modules/animejs/lib/anime.es.js","./src/js/Guide":"src/js/Guide.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./lib/AnimeBuilder.min.js":"lib/AnimeBuilder.min.js","animejs":"node_modules/animejs/lib/anime.es.js","./src/js/Guide":"src/js/Guide.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2831,7 +2733,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50439" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50801" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
