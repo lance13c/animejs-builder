@@ -202,25 +202,46 @@ import Guide from './src/js/Guide';
   
   let guideLeft = new Guide(".guideleft");
   
-  let builder = new AnimeBuilder({
+  const builder = new AnimeBuilder({
     targets: '.guideleft',
     loop: true,
     autoplay: true, //true
   });
   
-  let animation = builder
-    //.add(Guide.animeMoveX(0, {duration: 0, trailLength: 0}))
-    .add(Guide.animeMoveX(100, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveX(200, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
-    .add(Guide.animeMoveY(300, {duration: 200, trailLength: 12}))
+  // let animation = builder
+  //   //.add(Guide.animeMoveX(0, {duration: 0, trailLength: 0}))
+  //   .add(Guide.animeMoveX(100, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveX(200, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveY(100, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveY(0, {duration: 200, trailLength: 12}))
+  //   .add(Guide.animeMoveY(300, {duration: 200, trailLength: 12}))
 
-    //.add(Guide.animeMoveX(0, {duration: 800, trailLength: 12}))
+  //   //.add(Guide.animeMoveX(0, {duration: 800, trailLength: 12}))
 
-    .generateAnime();
+  //   .generateAnime();
+    const moveHorizontal = (length, duration) => {
+      return {
+        translateX: [
+          {value: length, 
+          duration: duration, 
+          easing: 'easeInOutQuad'}
+        ]
+      }
+    }
+
+    // const builder = new AnimeBuilder({
+    //   targets: '.circle',
+    //   autoplay: true
+    // });
+
+    const animation = builder
+      .add(moveHorizontal(0, 0))
+      .add(moveHorizontal('+=200', 2000))
+      .add(moveHorizontal('+=400', 2000))
+      .add(moveHorizontal(0, 1000))
+      .generateAnime();
 
   console.log(builder.extractAnimeRules());
     
