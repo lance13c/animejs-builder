@@ -1,19 +1,30 @@
-# AnimeJS Builder
+# AnimeJS Builder 🎊🎊🎊
+![min size](https://img.shields.io/bundlephobia/min/animejs-builder.svg?style=flat)
+![npm version](https://img.shields.io/npm/v/animejs-builder.svg?colorB=violet&style=flat)
+![last commit](https://img.shields.io/github/last-commit/lance13c/animejs-builder.svg?style=flat)
 
 A sequential animation building tool for the Anime.js library.
 Allowing for _smooth_, _seamless_, and _modular_ animations.
 
-## Installation
+## Installation 💻
 
-    npm install animejs
-    npm install animejs-builder
+### NPM 💠
 
-or
+    $ npm install animejs
+    $ npm install animejs-builder
+
+### Yarn 💠
     
-    yarn add animejs
-    yarn add animejs-builder
+    $ yarn add animejs
+    $ yarn add animejs-builder
 
-## How to Use Example
+### CDN 💠
+
+    <script src="https://cdn.jsdelivr.net/npm/animejs-builder@0.0.8/lib/AnimeBuilder.iife.min.js"></script>
+
+#### [CDN Link Here]("https://www.jsdelivr.com/package/npm/animejs-builder")
+
+## How to Use Example 🍉
 
 [AnimeJS Config Docs](https://animejs.com/documentation/#cssSelector)
 
@@ -44,9 +55,9 @@ or
       .generateAnime();
 
 
-### [CodePen]("https://codepen.io/lance13c/pen/NoyYOd")
+### [CodePen]("https://codepen.io/lance13c/pen/NoyYOd") 🌀
 
-### Restrictions
+### Restrictions ☢️
 
 * Currently, properties **must** be defined in the array format
 
@@ -58,9 +69,9 @@ or
         }
       ]
 
-## Features
+## Features 🎁
 
-### Placeholders
+### Placeholders 🗻
 
 The Anime Builder adds property placeholders, so each additional animation happens sequentially after the other.
 
@@ -96,7 +107,7 @@ When scaleX is added. A placeholder value for scaleX is added with a duration of
 These placeholder values are added for any property in order to align each animation addition.
 
 
-# Methods
+# Methods ⚔️
 
 ## class `AnimeBuilder([options])`
 
