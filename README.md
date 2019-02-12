@@ -38,9 +38,28 @@ or
     });
 
     const animation = builder
-      .add(moveHorizontal(100, 500))
-      .add(moveHorizontal(200, 1000))
+      .add(moveHorizontal(200, 500))
+      .add(moveHorizontal('+=200', 800))
+      .add(moveHorizontal(0, 1000))
       .generateAnime();
+
+
+### [CodePen]("https://codepen.io/lance13c/pen/NoyYOd")
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="js,result" data-user="lance13c" data-slug-hash="NoyYOd" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="AnimeJs Builder Example Horizontal">
+  <span>See the Pen <a href="https://codepen.io/lance13c/pen/NoyYOd/">
+  AnimeJs Builder Example Horizontal</a> by Dominic (<a href="https://codepen.io/lance13c">@lance13c</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="AnimeJs Builder Example Horizontal" src="//codepen.io/lance13c/embed/NoyYOd/?height=265&theme-id=0&default-tab=js,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/lance13c/pen/NoyYOd/'>AnimeJs Builder Example Horizontal</a> by Dominic
+  (<a href='https://codepen.io/lance13c'>@lance13c</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+Testing Embeds ^^^
 
 
 ### Restrictions
@@ -138,4 +157,4 @@ _**@returns**_ `{ AnimeJS instance }`
 
 This generates the actual animejs animation.
 
-## More Coming Soon
+## More Coming Soon :tada: U+1F44C <<< Testing Emojis :)
