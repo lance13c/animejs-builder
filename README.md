@@ -1,7 +1,7 @@
 # AnimeJS Builder 🎊🎊🎊
 ![min size](https://img.shields.io/bundlephobia/min/animejs-builder.svg?style=flat)
 ![npm version](https://img.shields.io/npm/v/animejs-builder.svg?colorB=violet&style=flat)
-[![last commit](https://img.shields.io/github/last-commit/lance13c/animejs-builder.svg?style=flat)]("https://github.com/lance13c/animejs-builder")
+[![last commit](https://img.shields.io/github/last-commit/lance13c/animejs-builder.svg?style=flat)](https://github.com/lance13c/animejs-builder)
 
 A sequential animation building tool for the Anime.js library.
 Allowing for _smooth_, _seamless_, and _modular_ animations.
