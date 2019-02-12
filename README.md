@@ -141,4 +141,4 @@ _**@returns**_ `{ AnimeJS instance }`
 
 This generates the actual animejs animation.
 
-## More Coming Soon :tada: U+1F44C <<< Testing Emojis :)
+## More Coming Soon 🎉🎉🎉
