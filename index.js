@@ -1,4 +1,4 @@
-import AnimeBuilder from './lib/AnimeBuilder.min.js';
+import AnimeBuilder from './lib/AnimeBuilder.mjs';
 import anime from "animejs";
 import Guide from './src/js/Guide';
   

@@ -6,14 +6,13 @@
     "type": "git",
     "url": "https://github.com/lance13c/animejs-builder"
   },
+  "browser": "lib/AnimeBuilder.iife.min.js",
   "umd:main": "lib/AnimeBuilder.min.js",
   "main": "lib/AnimeBuilder.js",
   "umd:name": "AnimeBuilder",
   "scripts": {
     "start": "./node_modules/.bin/parcel index.html",
-    "build-mod": "node_modules/.bin/babel --no-babelrc src/js/AnimeBuilder.js --out-dir lib --presets @babel/preset-env --plugins transform-es2015-modules-umd",
-    "build-min": "node_modules/.bin/babel --no-babelrc src/js/AnimeBuilder.js --presets=minify --out-file lib/AnimeBuilder.min.js --presets @babel/preset-env --plugins transform-es2015-modules-umd",
-    "build": "yarn build-mod && yarn build-min",
+    "build": "./node_modules/.bin/rollup -c rollup.config.js",
     "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
   },
   "author": "Dominic Cicilio",
@@ -32,6 +31,12 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "parcel-bundler": "^1.11.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.2",
     "sass": "^1.16.1"
   },
   "keywords": [
