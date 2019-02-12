@@ -1,4 +1,4 @@
-import AnimeBuilder from './lib/AnimeBuilder';
+import AnimeBuilder from './lib/AnimeBuilder.min.js';
 import anime from "animejs";
 import Guide from './src/js/Guide';
   
@@ -231,6 +231,16 @@ import Guide from './src/js/Guide';
       }
     }
 
+    const scaleHorizontal = (size, duration) => {
+      return {
+        scaleX: [
+          {value: size, 
+          duration: duration, 
+          easing: 'easeInOutQuad'}
+        ]
+      }
+    }
+
     // const builder = new AnimeBuilder({
     //   targets: '.circle',
     //   autoplay: true
@@ -238,8 +248,10 @@ import Guide from './src/js/Guide';
 
     const animation = builder
       .add(moveHorizontal(0, 0))
-      .add(moveHorizontal('+=200', 2000))
-      .add(moveHorizontal('+=400', 2000))
+      .add(moveHorizontal('+=100', 500))
+      .add(scaleHorizontal('+=3', 500))
+      .add(moveHorizontal('+=100', 500))
+      .add(scaleHorizontal(1, 500))
       .add(moveHorizontal(0, 1000))
       .generateAnime();
 

@@ -92,4 +92,50 @@ When scaleX is added. A placeholder value for scaleX is added with a duration of
 
 These placeholder values are added for any property in order to align each animation addition.
 
-More Coming Soon
+
+# Methods
+
+## class `AnimeBuilder([options])`
+
+_**options**_ - `{Object}`
+
+They are AnimeJS config options: [Anime JS Docs Here](https://animejs.com/documentation/#cssProperties)
+
+_**description**_
+
+Creates a new instance of AnimeBuilder
+
+## `add([properties])`
+
+_**properties**_ - `{Object of Property Arrays}`
+
+`1. i.e`
+
+    {
+      translateX: [
+        { value: 100, duration: 1000}
+      ]
+    }
+
+`2. i.e`
+
+    {
+      opacity: [
+        { value: 100, duration: 1000}
+      ],
+      rotateX: [
+        { value: '80deg', duration: 800},
+        { value: '0deg', duration: 400}
+      ]
+    }
+
+_**@returns**_ - `{current AnimeBuilder instance}`
+
+
+## `generateAnime()`
+
+_**@returns**_ `{ AnimeJS instance }`
+
+This generates the actual animejs animation.
+
+## More Coming Soon

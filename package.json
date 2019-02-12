@@ -2,14 +2,17 @@
   "name": "animejs-builder",
   "version": "0.0.3",
   "description": "A sequential animation building tool for the Anime.js library",
-  "github": "",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/lance13c/animejs-builder"
+  },
   "umd:main": "lib/AnimeBuilder.min.js",
   "main": "lib/AnimeBuilder.js",
   "umd:name": "AnimeBuilder",
   "scripts": {
     "start": "./node_modules/.bin/parcel index.html",
-    "build-mod": "node_modules/.bin/babel src/js/AnimeBuilder.js --out-dir lib",
-    "build-min": "node_modules/.bin/babel src/js/AnimeBuilder.js --presets=minify --out-file lib/AnimeBuilder.min.js",
+    "build-mod": "node_modules/.bin/babel --no-babelrc src/js/AnimeBuilder.js --out-dir lib --presets @babel/preset-env --plugins transform-es2015-modules-umd",
+    "build-min": "node_modules/.bin/babel --no-babelrc src/js/AnimeBuilder.js --presets=minify --out-file lib/AnimeBuilder.min.js --presets @babel/preset-env --plugins transform-es2015-modules-umd",
     "build": "yarn build-mod && yarn build-min",
     "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
   },
@@ -24,6 +27,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
