@@ -1,6 +1,6 @@
 {
   "name": "animejs-builder",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A sequential animation building tool for the Anime.js library",
   "repository": {
     "type": "git",
