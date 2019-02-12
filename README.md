@@ -22,7 +22,7 @@ Allowing for _smooth_, _seamless_, and _modular_ animations.
 
     <script src="https://cdn.jsdelivr.net/npm/animejs-builder@0.0.8/lib/AnimeBuilder.iife.min.js"></script>
 
-#### [CDN Link Here]("https://www.jsdelivr.com/package/npm/animejs-builder")
+**[CDN Link Here]("https://www.jsdelivr.com/package/npm/animejs-builder")**
 
 ## How to Use Example 🍉
 
@@ -55,7 +55,7 @@ Allowing for _smooth_, _seamless_, and _modular_ animations.
       .generateAnime();
 
 
-### [CodePen]("https://codepen.io/lance13c/pen/NoyYOd") 🌀
+### [CodePen](https://codepen.io/lance13c/pen/NoyYOd) 🌀
 
 ### Restrictions ☢️
 
