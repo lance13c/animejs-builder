@@ -1,48 +1,40 @@
-#page {
-  margin: 50px 50px 0 50px;
-}
+// #page {
+//   margin: 50px 50px 0 50px;
+// }
 
-h1,h2,h3,h4 {
+h1,h2,h3,h4,h5,h6 {
   font-family: 'Oswald', sans-serif;
 }
 
-p {
-  font-family: 'Open Sans', sans-serif;
+// p {
+//   font-family: 'Open Sans', sans-serif;
+// }
+
+html {
+  font-size: 62.5%;
 }
 
-.guideleft, .guideright {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 3px;
-  background: skyblue;
-}
+#site {
+  margin: 0 50px;
+  font-size: 1.6rem;
 
-.nav {
-  font-family: 'Oswald', sans-serif;
-  display: flex;
-  list-style-type: none;
-  margin: 10px 0;
-  padding: 0;
-  
-  li {
-    display: inline-block;
-    margin: 0 15px 0 0;
-    height: 30px;
-    
-    &:hover,
-    &:focus {
-      color: lightblue;
-      cursor: pointer;
+
+  nav {
+    display: grid;
+    grid-template-columns: 20% auto 20%;
+
+    nav__right {
+      display: flex;
+      justify-content: space-between;
     }
   }
-}
 
-#blog {
-  height: 700px;
-    
-  // h1,h2,p {
-  //   transition: opacity;
-  //   opacity: 1;
-  // }
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
 }

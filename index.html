@@ -6,19 +6,33 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
   <link rel="stylesheet" href="./src/styles/main.scss">
-  <title>Animation Builder Demo</title>
+  <title>AnimeJS Builder Demo</title>
 </head>
 <body>
-  <div id="page">
-    <div class="guideleft guide"></div>
-    <div class="guideright guide"></div>
-    <ul class="nav">
-      <li id="homepage">HomePage</li>
-      <li id="secondpage">SecondPage</li>
-    </ul>
+  <section id="site">
+    <div class="nav">
+      <div class="nav__left">
+        <!-- Where title will go after scrolling down -->
+      </div>
+      <div class="nav__right">
+        <a href="docs" class="nav__item">Docs</a>
+        <a href="npm" class="nav__item">NPM</a>
+        <a href="git" class="nav__item">GITHUB LINK</a>
+      </div>
+    </div>
     
-    <div id="blog"></div>
-  </div>
+    <h1></h1>
+    <h2></h2>
+    <section class="example">
+      <h2 class="example__header">Modular & Sycronous</h2>
+      <div class="example_animations"></div>
+      <div class="example__queue"></div>
+      <div class="example__animation-space"></div>
+    </section>
+
+    <section id="docs">Docs</section>
+    
+  </section>
 
   <script src="./index.js"></script>
   

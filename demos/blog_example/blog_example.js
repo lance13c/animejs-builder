@@ -1,6 +1,6 @@
-import AnimeBuilder from './lib/AnimeBuilder.js';
+import AnimeBuilder from './lib/AnimeBuilder.mjs';
 import anime from "animejs";
-import Guide from './src/js/Guide';
+import Guide from '../../src/js/Guide';
   
   
   let page = document.querySelector("#page");
